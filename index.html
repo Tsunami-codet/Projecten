@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vadym Rusanov — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #0b0e14;
+    --surface:   #111520;
+    --card:      #161c2a;
+    --border:    #1e2840;
+    --accent:    #4f8ef7;
+    --accent2:   #7c3aed;
+    --green:     #10d9a0;
+    --text:      #e2e8f4;
+    --muted:     #7a8aa8;
+    --mono:      'JetBrains Mono', monospace;
+    --sans:      'Space Grotesk', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(11,14,20,.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo {
+    font-family: var(--mono); font-size: .95rem; color: var(--accent);
+    letter-spacing: .05em;
+  }
+  .nav-logo span { color: var(--green); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none; font-size: .9rem;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 100px 2rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -200px; right: -200px;
+    width: 700px; height: 700px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(79,142,247,.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 860px; margin: 0 auto; }
+
+  .hero-tag {
+    display: inline-block;
+    font-family: var(--mono); font-size: .8rem;
+    color: var(--green); border: 1px solid rgba(16,217,160,.3);
+    background: rgba(16,217,160,.06);
+    padding: .25rem .75rem; border-radius: 999px;
+    margin-bottom: 1.5rem; letter-spacing: .05em;
+  }
+
+  h1 {
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 700; line-height: 1.05;
+    letter-spacing: -.03em;
+    margin-bottom: 1.25rem;
+  }
+  h1 .name-accent {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem; color: var(--muted); max-width: 560px;
+    margin-bottom: 2.5rem; line-height: 1.7;
+  }
+
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .75rem 1.75rem; border-radius: 8px;
+    font-family: var(--sans); font-size: .95rem; font-weight: 600;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: all .2s;
+  }
+  .btn-primary {
+    background: var(--accent); color: #fff;
+  }
+  .btn-primary:hover { background: #3a7de8; transform: translateY(-2px); }
+  .btn-ghost {
+    background: transparent; color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 4rem;
+    padding-top: 2rem; border-top: 1px solid var(--border);
+  }
+  .stat-num {
+    font-size: 2rem; font-weight: 700; color: var(--text);
+    font-family: var(--mono);
+  }
+  .stat-label { font-size: .8rem; color: var(--muted); margin-top: .1rem; }
+
+  /* ── SECTION ── */
+  section { padding: 5rem 2rem; }
+  .container { max-width: 1000px; margin: 0 auto; }
+
+  .section-label {
+    font-family: var(--mono); font-size: .75rem;
+    color: var(--accent); letter-spacing: .12em;
+    text-transform: uppercase; margin-bottom: .75rem;
+  }
+  h2 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 700; letter-spacing: -.02em;
+    margin-bottom: 1rem;
+  }
+  .section-intro { color: var(--muted); font-size: 1rem; max-width: 520px; margin-bottom: 3rem; }
+
+  /* ── ABOUT ── */
+  #about { background: var(--surface); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .about-text p { color: var(--muted); margin-bottom: 1rem; line-height: 1.8; }
+  .about-info { display: flex; flex-direction: column; gap: 1rem; }
+  .info-item {
+    display: flex; align-items: center; gap: .75rem;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: .85rem 1.1rem;
+  }
+  .info-icon { font-size: 1.2rem; }
+  .info-content { flex: 1; }
+  .info-label { font-size: .72rem; color: var(--muted); font-family: var(--mono); }
+  .info-value { font-size: .92rem; font-weight: 500; color: var(--text); }
+
+  /* ── SKILLS ── */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; }
+  .skill-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.25rem;
+    text-align: center; transition: all .2s;
+  }
+  .skill-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .skill-icon { font-size: 2rem; margin-bottom: .6rem; }
+  .skill-name { font-size: .85rem; font-weight: 600; }
+  .skill-level {
+    font-size: .7rem; color: var(--muted);
+    font-family: var(--mono); margin-top: .2rem;
+  }
+  .skill-bar {
+    height: 3px; background: var(--border); border-radius: 2px;
+    margin-top: .6rem; overflow: hidden;
+  }
+  .skill-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+
+  /* ── PROJECTS ── */
+  #projects { background: var(--surface); }
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .project-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 1.75rem;
+    transition: all .25s; cursor: default;
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 12px 40px rgba(79,142,247,.12); }
+  .project-top { display: flex; align-items: center; justify-content: space-between; }
+  .project-icon { font-size: 1.8rem; }
+  .project-lang {
+    font-family: var(--mono); font-size: .7rem;
+    padding: .2rem .6rem; border-radius: 999px;
+    border: 1px solid var(--border); color: var(--muted);
+  }
+  .project-card h3 { font-size: 1.05rem; font-weight: 600; }
+  .project-card p { color: var(--muted); font-size: .875rem; line-height: 1.6; flex: 1; }
+  .project-tags { display: flex; gap: .5rem; flex-wrap: wrap; }
+  .tag {
+    font-size: .7rem; font-family: var(--mono);
+    background: rgba(79,142,247,.1); color: var(--accent);
+    padding: .2rem .6rem; border-radius: 4px;
+  }
+  .project-links { display: flex; gap: .75rem; margin-top: .25rem; }
+  .project-link {
+    font-size: .8rem; color: var(--muted); text-decoration: none;
+    display: flex; align-items: center; gap: .3rem;
+    transition: color .2s;
+  }
+  .project-link:hover { color: var(--accent); }
+
+  /* ── CONTACT ── */
+  .contact-box {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 20px; padding: 3rem; text-align: center;
+  }
+  .contact-box h2 { margin-bottom: .75rem; }
+  .contact-box p { color: var(--muted); margin-bottom: 2rem; }
+  .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  .contact-link {
+    display: flex; align-items: center; gap: .6rem;
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text); text-decoration: none;
+    padding: .7rem 1.4rem; border-radius: 8px;
+    font-size: .9rem; transition: all .2s;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center; padding: 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted); font-size: .82rem;
+    font-family: var(--mono);
+  }
+
+  /* ── SCROLL FADE ── */
+  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 700px) {
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-stats { gap: 1.5rem; }
+    nav { padding: 0 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><span>&lt;</span>vadym<span>/&gt;</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">Over mij</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projecten</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">🎓 MBO4 Software Developer · Astrum College</div>
+    <h1>Hoi, ik ben<br><span class="name-accent">Vadym Rusanov</span></h1>
+    <p class="hero-sub">
+      Eerste jaars student Software Development aan het Astrum College (2025–2026).
+      Ik bouw dingen met PHP, C#, Python en JavaScript — en ik leer elke dag bij.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn btn-primary">🚀 Mijn projecten</a>
+      <a href="#contact" class="btn btn-ghost">📬 Contact</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">4</div>
+        <div class="stat-label">Talen</div>
+      </div>
+      <div>
+        <div class="stat-num">4</div>
+        <div class="stat-label">Projecten</div>
+      </div>
+      <div>
+        <div class="stat-num">1</div>
+        <div class="stat-label">Jaar ervaring</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid fade-in">
+      <div class="about-text">
+        <div class="section-label">// over mij</div>
+        <h2>Student & Developer</h2>
+        <p>
+          Ik ben Vadym Rusanov, een gedreven MBO4 Software Development student aan het Astrum College.
+          In mijn eerste jaar heb ik al een stevige basis gelegd in meerdere programmeertalen en leer ik
+          elke dag meer over het bouwen van applicaties.
+        </p>
+        <p>
+          Ik hou van het oplossen van problemen met code. Of het nu een handige tool is, een clean website
+          of een slim algoritme — als het werkt, ben ik blij.
+        </p>
+      </div>
+      <div class="about-info">
+        <div class="info-item">
+          <div class="info-icon">🎓</div>
+          <div class="info-content">
+            <div class="info-label">opleiding</div>
+            <div class="info-value">MBO4 Software Developer</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">🏫</div>
+          <div class="info-content">
+            <div class="info-label">school</div>
+            <div class="info-value">Astrum College</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">📅</div>
+          <div class="info-content">
+            <div class="info-label">schooljaar</div>
+            <div class="info-value">2025 – 2026 (Eerste jaar)</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">📍</div>
+          <div class="info-content">
+            <div class="info-label">locatie</div>
+            <div class="info-value">Nederland</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">💻</div>
+          <div class="info-content">
+            <div class="info-label">focus</div>
+            <div class="info-value">Full-stack development</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="fade-in">
+      <div class="section-label">// skills</div>
+      <h2>Wat ik gebruik</h2>
+      <p class="section-intro">De talen en tools die ik dit jaar heb geleerd en gebruik.</p>
+    </div>
+    <div class="skills-grid fade-in">
+      <div class="skill-card">
+        <div class="skill-icon">🐘</div>
+        <div class="skill-name">PHP</div>
+        <div class="skill-level">Lerende</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:60%"></div></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🔷</div>
+        <div class="skill-name">C#</div>
+        <div class="skill-level">Lerende</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:55%"></div></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🐍</div>
+        <div class="skill-name">Python</div>
+        <div class="skill-level">Basis</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🟨</div>
+        <div class="skill-name">JavaScript</div>
+        <div class="skill-level">Basis</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:60%"></div></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🌐</div>
+        <div class="skill-name">HTML/CSS</div>
+        <div class="skill-level">Goed</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🗄️</div>
+        <div class="skill-name">SQL</div>
+        <div class="skill-level">Basis</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:50%"></div></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🐙</div>
+        <div class="skill-name">Git</div>
+        <div class="skill-level">Basis</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:50%"></div></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">💻</div>
+        <div class="skill-name">VS Code</div>
+        <div class="skill-level">Dagelijks</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="fade-in">
+      <div class="section-label">// projecten</div>
+      <h2>Wat ik heb gebouwd</h2>
+      <p class="section-intro">Vier portfolio projecten — één per programmeertaal.</p>
+    </div>
+    <div class="projects-grid fade-in">
+
+      <div class="project-card">
+        <div class="project-top">
+          <div class="project-icon">📊</div>
+          <div class="project-lang">PHP</div>
+        </div>
+        <h3>Grade Calculator</h3>
+        <p>Een PHP applicatie die cijfers bijhoudt, een gemiddelde berekent en een rapport genereert met slaag/zakbepaling.</p>
+        <div class="project-tags">
+          <span class="tag">OOP</span>
+          <span class="tag">PHP 8.1</span>
+          <span class="tag">Arrays</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Tsunami-codet/php-grade-calculator" class="project-link" target="_blank">
+            🐙 GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-top">
+          <div class="project-icon">✅</div>
+          <div class="project-lang">C#</div>
+        </div>
+        <h3>Task Manager</h3>
+        <p>Console-based taakbeheer applicatie in C# met prioriteiten, status tracking en statistieken.</p>
+        <div class="project-tags">
+          <span class="tag">OOP</span>
+          <span class="tag">.NET 8</span>
+          <span class="tag">LINQ</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Tsunami-codet/csharp-task-manager" class="project-link" target="_blank">
+            🐙 GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-top">
+          <div class="project-icon">🔐</div>
+          <div class="project-lang">Python</div>
+        </div>
+        <h3>Password Generator</h3>
+        <p>Veilige wachtwoorden genereren en analyseren. Met sterktescore (0–100) en gerichte feedback.</p>
+        <div class="project-tags">
+          <span class="tag">Python 3.10</span>
+          <span class="tag">Regex</span>
+          <span class="tag">Dataclasses</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Tsunami-codet/python-password-generator" class="project-link" target="_blank">
+            🐙 GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-top">
+          <div class="project-icon">🧠</div>
+          <div class="project-lang">JavaScript</div>
+        </div>
+        <h3>JavaScript Quiz App</h3>
+        <p>Interactieve quiz over JavaScript met willekeurige volgorde, score, uitleg en cijferberekening.</p>
+        <div class="project-tags">
+          <span class="tag">ES6+</span>
+          <span class="tag">Klassen</span>
+          <span class="tag">Vanilla JS</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Tsunami-codet/javascript-quiz-app" class="project-link" target="_blank">
+            🐙 GitHub
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-box fade-in">
+      <h2>Laten we in contact komen</h2>
+      <p>Stuur me een bericht via GitHub of LinkedIn.</p>
+      <div class="contact-links">
+        <a href="https://github.com/Tsunami-codet" class="contact-link" target="_blank">
+          🐙 GitHub
+        </a>
+        <a href="https://linkedin.com/in/vadymrusanov" class="contact-link" target="_blank">
+          💼 LinkedIn
+        </a>
+        <a href="mailto:vadym@example.com" class="contact-link">
+          📧 E-mail
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>// gebouwd door <strong>Vadym Rusanov</strong> · Astrum College MBO4 · 2025–2026</span>
+</footer>
+
+<script>
+  // Scroll fade-in
+  const observer = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.12 }
+  );
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
