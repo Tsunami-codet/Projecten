@@ -1,0 +1,25 @@
+# IDE
+.vscode/
+.idea/
+
+# Environment (пароли, ключи)
+.env
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# JavaScript / Node.js
+node_modules/
+dist/
+build/
+
+# PHP
+/vendor/
+
+# C++
+*.o
+*.exe
+build/
